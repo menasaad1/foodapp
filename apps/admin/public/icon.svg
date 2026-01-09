@@ -1,0 +1,41 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: light) {
+      .background { fill: #8B2E3D; }
+      .foreground { fill: white; }
+      .accent { fill: #D4A574; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #D4A574; }
+      .foreground { fill: #8B2E3D; }
+      .accent { fill: white; }
+    }
+  </style>
+  <defs>
+    <clipPath id="clip0_7960_43945">
+      <rect width="180" height="180" fill="white" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#clip0_7960_43945)">
+    <!-- Replaced Arabic text with geometric design representing a plate/bowl for food delivery app -->
+    <rect class="background" width="180" height="180" rx="37" />
+    
+    <!-- Central bowl/plate shape -->
+    <circle cx="90" cy="90" r="50" class="foreground" opacity="0.1"/>
+    <circle cx="90" cy="85" r="45" class="foreground" opacity="0.15"/>
+    
+    <!-- Decorative crescents representing food items -->
+    <path d="M 65 70 Q 70 65 75 70 Q 70 75 65 70" class="accent" stroke="none"/>
+    <path d="M 105 70 Q 110 65 115 70 Q 110 75 105 70" class="accent" stroke="none"/>
+    
+    <!-- Main plate outline -->
+    <circle cx="90" cy="90" r="48" class="foreground" fill="none" stroke-width="3"/>
+    
+    <!-- Accent line representing gold trim -->
+    <path d="M 50 90 Q 90 110 130 90" class="accent" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Small decorative dots -->
+    <circle cx="70" cy="85" r="3" class="accent"/>
+    <circle cx="110" cy="85" r="3" class="accent"/>
+  </g>
+</svg>

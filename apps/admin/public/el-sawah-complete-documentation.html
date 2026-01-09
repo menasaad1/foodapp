@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>el sawah - دليل التصميم الكامل</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .page {
+            page-break-after: always;
+            min-height: 297mm;
+            width: 210mm;
+            padding: 0;
+            position: relative;
+            background: white;
+        }
+
+        /* Cover Page */
+        .cover {
+            background: linear-gradient(135deg, #D4234E 0%, #8B1538 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .cover h1 {
+            font-size: 72px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .cover .subtitle {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .cover .subtitle-ar {
+            font-size: 24px;
+            margin-bottom: 60px;
+            opacity: 0.95;
+        }
+
+        .cover .description {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 40px auto;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .cover .meta {
+            margin-top: 80px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Table of Contents */
+        .toc {
+            padding: 60px 50px;
+        }
+
+        .toc h1 {
+            color: #D4234E;
+            font-size: 42px;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #D4234E;
+            padding-bottom: 15px;
+        }
+
+        .toc-item {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-right: 5px solid #D4234E;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toc-item strong {
+            color: #D4234E;
+            font-size: 20px;
+            margin-left: 15px;
+        }
+
+        .toc-item span {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Design System Page */
+        .design-system {
+            padding: 50px;
+        }
+
+        .section-header {
+            background: #D4234E;
+            color: white;
+            padding: 20px 50px;
+            margin: -50px -50px 40px -50px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-box .color-name {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .color-box .color-code {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            background: #f5f5f5;
+            padding: 20px;
+            border-right: 5px solid #D4234E;
+            border-radius: 8px;
+        }
+
+        .feature-item strong {
+            color: #D4234E;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Page Screenshot */
+        .page-content {
+            padding: 50px;
+        }
+
+        .page-screenshot {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .page-screenshot img {
+            max-width: 400px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-info {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-right: 5px solid #D4234E;
+        }
+
+        .page-info h3 {
+            color: #D4234E;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .page-info .info-row {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-info .info-label {
+            font-weight: bold;
+            color: #D4234E;
+            min-width: 120px;
+        }
+
+        .page-info .info-value {
+            color: #666;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: #D4234E;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        h2 {
+            color: #D4234E;
+            font-size: 28px;
+            margin: 30px 0 20px 0;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 22px;
+            margin: 20px 0 15px 0;
+        }
+
+        .tech-stack {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-right: 4px solid #D4234E;
+        }
+
+        .tech-item strong {
+            color: #D4234E;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- COVER PAGE -->
+    <div class="page cover">
+        <h1>el sawah</h1>
+        <div class="subtitle">Food Delivery Application</div>
+        <div class="subtitle-ar">تطبيق توصيل الطعام</div>
+
+        <div class="description">
+            دليل التصميم الشامل والتوثيق الكامل لتطبيق توصيل الطعام
+            <br><br>
+            Complete Design Guide & Documentation
+            <br>
+            for Food Delivery Mobile Application
+        </div>
+
+        <div class="meta">
+            تاريخ الإصدار: 6 يناير 2026<br>
+            Generated: January 6, 2026<br>
+            Version 1.0
+        </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="page toc">
+        <h1>📋 جدول المحتويات / Table of Contents</h1>
+
+        <div class="toc-item">
+            <div>
+                <strong>1.</strong>
+                <span>نظام التصميم / Design System</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>2.</strong>
+                <span>الصفحة الرئيسية / Home Page</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>3.</strong>
+                <span>البحث والفلترة / Search & Filters</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>4.</strong>
+                <span>تفاصيل المطعم / Restaurant Details</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>5.</strong>
+                <span>سلة التسوق / Shopping Cart</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>6.</strong>
+                <span>إتمام الطلب / Checkout</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>7.</strong>
+                <span>تتبع الطلب / Order Tracking</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>8.</strong>
+                <span>المفضلة / Favorites</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>9.</strong>
+                <span>سجل الطلبات / Order History</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>10.</strong>
+                <span>الملف الشخصي / User Profile</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>11.</strong>
+                <span>تسجيل الدخول / Login</span>
+            </div>
+        </div>
+
+        <div class="toc-item">
+            <div>
+                <strong>12.</strong>
+                <span>المكدس التقني / Technology Stack</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESIGN SYSTEM PAGE -->
+    <div class="page design-system">
+        <div class="section-header">🎨 نظام التصميم / Design System</div>
+
+        <h2>الألوان الأساسية / Brand Colors</h2>
+        <div class="color-palette">
+            <div class="color-box" style="background: #D4234E;">
+                <div class="color-name">Primary Red</div>
+                <div class="color-code">#D4234E</div>
+            </div>
+            <div class="color-box" style="background: #C41A3F;">
+                <div class="color-name">Dark Red</div>
+                <div class="color-code">#C41A3F</div>
+            </div>
+            <div class="color-box" style="background: #F4A460;">
+                <div class="color-name">Accent Orange</div>
+                <div class="color-code">#F4A460</div>
+            </div>
+            <div class="color-box" style="background: #2C2C2C;">
+                <div class="color-name">Dark Gray</div>
+                <div class="color-code">#2C2C2C</div>
+            </div>
+        </div>
+
+        <h2>الطباعة / Typography</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>العناوين / Headings</strong>
+                <p>Geist Sans - Bold<br>24-32px</p>
+            </div>
+            <div class="feature-item">
+                <strong>النصوص / Body Text</strong>
+                <p>Geist Sans - Regular<br>14-16px</p>
+            </div>
+        </div>
+
+        <h2>الميزات الرئيسية / Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>🏠 تحديثات فورية</strong>
+                <p>Real-time order tracking and updates</p>
+            </div>
+            <div class="feature-item">
+                <strong>📱 تصميم موبايل أولاً</strong>
+                <p>Mobile-first responsive design</p>
+            </div>
+            <div class="feature-item">
+                <strong>🌙 الوضع الداكن</strong>
+                <p>Dark mode support</p>
+            </div>
+            <div class="feature-item">
+                <strong>🔐 مصادقة آمنة</strong>
+                <p>Secure authentication with Supabase</p>
+            </div>
+            <div class="feature-item">
+                <strong>🎯 واجهة سهلة</strong>
+                <p>Intuitive user interface</p>
+            </div>
+            <div class="feature-item">
+                <strong>⚡ أداء عالي</strong>
+                <p>Fast loading and smooth animations</p>
+            </div>
+        </div>
+
+        <h2>أبعاد الشاشة / Screen Dimensions</h2>
+        <div class="feature-item">
+            <strong>Mobile Viewport</strong>
+            <p>375 × 812 pixels (iPhone X/11/12/13 standard)</p>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page page-content">
+        <div class="section-header">🏠 الصفحة الرئيسية / Home Page</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/home_page_design_1767697889047.png"
+                alt="Home Page">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">الصفحة الرئيسية للتطبيق - Main landing page</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>شريط البحث مع أيقونة / Search bar with icon</li>
+                <li>عرض دائري للعروض الترويجية / Promotional carousel</li>
+                <li>تصنيفات الطعام / Food categories</li>
+                <li>شبكة المطاعم المميزة / Featured restaurants grid</li>
+                <li>شريط التنقل السفلي / Bottom navigation bar</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الميزات / Features</h3>
+            <ul class="features-list">
+                <li>عرض المطاعم القريبة / Display nearby restaurants</li>
+                <li>تصفية حسب نوع الطعام / Filter by cuisine type</li>
+                <li>عرض التقييمات ووقت التوصيل / Show ratings and delivery time</li>
+                <li>العروض الخاصة والخصومات / Special offers and discounts</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SEARCH PAGE -->
+    <div class="page page-content">
+        <div class="section-header">🔍 البحث والفلترة / Search & Filters</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/search_page_design_1767697912182.png"
+                alt="Search Page">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/search</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">البحث المتقدم عن المطاعم والأطباق / Advanced search for restaurants and
+                    dishes</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>حقل بحث كبير / Large search input field</li>
+                <li>رقائق الفلترة السريعة / Quick filter chips</li>
+                <li>قسم عمليات البحث الأخيرة / Recent searches section</li>
+                <li>شبكة نتائج البحث / Search results grid</li>
+                <li>أزرار الفرز والترتيب / Sort and order buttons</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">خيارات الفلترة / Filter Options</h3>
+            <ul class="features-list">
+                <li>الكل / All</li>
+                <li>توصيل سريع / Fast Delivery</li>
+                <li>الأعلى تقييماً / Top Rated</li>
+                <li>العروض / Offers</li>
+                <li>حسب نوع الطعام / By Cuisine Type</li>
+                <li>حسب المسافة / By Distance</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- RESTAURANT PAGE -->
+    <div class="page page-content">
+        <div class="section-header">🍽️ تفاصيل المطعم / Restaurant Details</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/restaurant_page_design_1767697935062.png"
+                alt="Restaurant Page">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/restaurant/[id]</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">عرض تفاصيل المطعم والقائمة / Display restaurant details and menu</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>صورة رأس المطعم الكبيرة / Large restaurant header image</li>
+                <li>معلومات المطعم والتقييم / Restaurant info and rating</li>
+                <li>تبويبات: القائمة، المعلومات، التقييمات / Tabs: Menu, Info, Reviews</li>
+                <li>قائمة الأطباق مع الصور / Menu items with images</li>
+                <li>زر إضافة للسلة / Add to cart button</li>
+                <li>زر السلة العائم / Floating cart button</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الميزات / Features</h3>
+            <ul class="features-list">
+                <li>عرض قائمة الطعام بالتصنيفات / Categorized menu display</li>
+                <li>إضافة الأطباق للسلة / Add items to cart</li>
+                <li>عرض الأسعار بالدرهم الإماراتي / Prices in AED</li>
+                <li>إضافة للمفضلة / Add to favorites</li>
+                <li>عرض وقت التوصيل المتوقع / Show estimated delivery time</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CART PAGE -->
+    <div class="page page-content">
+        <div class="section-header">🛒 سلة التسوق / Shopping Cart</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/cart_page_design_1767697953406.png"
+                alt="Cart Page">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/cart</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">إدارة عناصر السلة / Manage cart items</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>قائمة عناصر السلة / Cart items list</li>
+                <li>محدد الكمية (+ و -) / Quantity selector</li>
+                <li>حقل التعليمات الخاصة / Special instructions field</li>
+                <li>تفصيل الأسعار / Price breakdown</li>
+                <li>حقل كود الخصم / Promo code field</li>
+                <li>زر المتابعة للدفع / Proceed to checkout button</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">تفصيل الأسعار / Price Breakdown</h3>
+            <ul class="features-list">
+                <li>المجموع الفرعي / Subtotal</li>
+                <li>رسوم التوصيل / Delivery fee</li>
+                <li>رسوم الخدمة / Service fee</li>
+                <li>الخصم (إن وجد) / Discount (if applicable)</li>
+                <li>المجموع الكلي / Total amount</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CHECKOUT PAGE -->
+    <div class="page page-content">
+        <div class="section-header">💳 إتمام الطلب / Checkout</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/checkout_page_design_1767697976647.png"
+                alt="Checkout Page">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/checkout</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">إتمام عملية الشراء / Complete the purchase process</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>قسم عنوان التوصيل / Delivery address section</li>
+                <li>محدد وقت التوصيل / Delivery time selector</li>
+                <li>قسم طريقة الدفع / Payment method section</li>
+                <li>ملخص الطلب / Order summary</li>
+                <li>حقل التعليمات الخاصة / Special instructions field</li>
+                <li>زر تأكيد الطلب / Place order button</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">طرق الدفع / Payment Methods</h3>
+            <ul class="features-list">
+                <li>بطاقة الائتمان / Credit Card</li>
+                <li>الدفع عند الاستلام / Cash on Delivery</li>
+                <li>المحفظة الإلكترونية / Digital Wallet</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">خيارات التوصيل / Delivery Options</h3>
+            <ul class="features-list">
+                <li>التوصيل الآن / Deliver Now</li>
+                <li>جدولة التوصيل / Schedule Delivery</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ORDER TRACKING PAGE -->
+    <div class="page page-content">
+        <div class="section-header">📍 تتبع الطلب / Order Tracking</div>
+
+        <div class="page-screenshot">
+            <img src="C:/Users/menas/.gemini/antigravity/brain/f167bf8e-1010-4f6e-bb80-8abd511aa71a/order_tracking_design_1767697995496.png"
+                alt="Order Tracking">
+        </div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/orders/[id]</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">تتبع حالة الطلب في الوقت الفعلي / Real-time order status tracking</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>الجدول الزمني لحالة الطلب / Order status timeline</li>
+                <li>الوقت المتوقع للتوصيل / Estimated delivery time</li>
+                <li>معلومات السائق / Driver information</li>
+                <li>خريطة مسار التوصيل / Delivery route map</li>
+                <li>تفاصيل الطلب / Order details</li>
+                <li>أزرار الاتصال والرسائل / Call and message buttons</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">مراحل الطلب / Order Stages</h3>
+            <ul class="features-list">
+                <li>تم تأكيد الطلب / Order Confirmed</li>
+                <li>المطعم يحضر الطلب / Restaurant Preparing</li>
+                <li>في الطريق للتوصيل / Out for Delivery</li>
+                <li>تم التوصيل / Delivered</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FAVORITES PAGE -->
+    <div class="page page-content">
+        <div class="section-header">❤️ المفضلة / Favorites</div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/favorites</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">المطاعم المحفوظة في المفضلة / Saved favorite restaurants</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>شبكة المطاعم المفضلة / Favorite restaurants grid</li>
+                <li>بطاقات المطاعم مع الصور / Restaurant cards with images</li>
+                <li>أيقونة القلب الممتلئة / Filled heart icon</li>
+                <li>معلومات المطعم والتقييم / Restaurant info and rating</li>
+                <li>خيار إزالة من المفضلة / Remove from favorites option</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الميزات / Features</h3>
+            <ul class="features-list">
+                <li>الوصول السريع للمطاعم المفضلة / Quick access to favorite restaurants</li>
+                <li>عرض التقييمات ووقت التوصيل / Show ratings and delivery time</li>
+                <li>إمكانية الطلب مباشرة / Direct ordering capability</li>
+                <li>حالة فارغة مع رسم توضيحي / Empty state with illustration</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">معلومات البطاقة / Card Information</h3>
+            <ul class="features-list">
+                <li>اسم المطعم / Restaurant name</li>
+                <li>نوع المطبخ / Cuisine type</li>
+                <li>التقييم (من 5 نجوم) / Rating (out of 5 stars)</li>
+                <li>وقت التوصيل المتوقع / Estimated delivery time</li>
+                <li>الحد الأدنى للطلب / Minimum order amount</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ORDER HISTORY PAGE -->
+    <div class="page page-content">
+        <div class="section-header">📜 سجل الطلبات / Order History</div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/history</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">عرض الطلبات السابقة / Display past orders</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>تبويبات الفلترة (الكل، مكتمل، ملغي) / Filter tabs</li>
+                <li>قائمة الطلبات السابقة / Past orders list</li>
+                <li>بطاقات الطلبات / Order cards</li>
+                <li>زر إعادة الطلب / Reorder button</li>
+                <li>رابط عرض التفاصيل / View details link</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">معلومات الطلب / Order Information</h3>
+            <ul class="features-list">
+                <li>اسم المطعم وشعاره / Restaurant name and logo</li>
+                <li>تاريخ ووقت الطلب / Order date and time</li>
+                <li>ملخص العناصر / Items summary</li>
+                <li>المبلغ الإجمالي / Total amount</li>
+                <li>حالة الطلب / Order status</li>
+                <li>رقم الطلب / Order number</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الميزات / Features</h3>
+            <ul class="features-list">
+                <li>إعادة طلب نفس العناصر بنقرة واحدة / One-click reorder</li>
+                <li>عرض تفاصيل الطلب الكاملة / View full order details</li>
+                <li>تقييم الطلب والمطعم / Rate order and restaurant</li>
+                <li>السحب للتحديث / Pull to refresh</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page page-content">
+        <div class="section-header">👤 الملف الشخصي / User Profile</div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/profile</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">إدارة الحساب والإعدادات / Account management and settings</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>قسم معلومات المستخدم / User information section</li>
+                <li>صورة الملف الشخصي / Profile photo</li>
+                <li>بطاقات الإحصائيات السريعة / Quick stats cards</li>
+                <li>قائمة خيارات الإعدادات / Settings options menu</li>
+                <li>زر تسجيل الخروج / Logout button</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الإحصائيات / Statistics</h3>
+            <ul class="features-list">
+                <li>إجمالي الطلبات / Total orders count</li>
+                <li>متوسط التقييم / Average rating</li>
+                <li>نقاط الولاء / Loyalty points</li>
+                <li>مستوى العضوية / Membership tier</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">خيارات الإعدادات / Settings Options</h3>
+            <ul class="features-list">
+                <li>عناويني / My Addresses</li>
+                <li>طرق الدفع / Payment Methods</li>
+                <li>الإشعارات / Notifications</li>
+                <li>اللغة / Language</li>
+                <li>المساعدة والدعم / Help & Support</li>
+                <li>حول التطبيق / About</li>
+                <li>تغيير كلمة المرور / Change Password</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div class="page page-content">
+        <div class="section-header">🔐 تسجيل الدخول / Login</div>
+
+        <div class="page-info">
+            <h3>معلومات الصفحة / Page Information</h3>
+            <div class="info-row">
+                <span class="info-label">المسار / Route:</span>
+                <span class="info-value">/auth/login</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوصف / Description:</span>
+                <span class="info-value">تسجيل الدخول للحساب / User authentication</span>
+            </div>
+
+            <h3 style="margin-top: 25px;">المكونات / Components</h3>
+            <ul class="features-list">
+                <li>قسم الرأس بالشعار / Header section with logo</li>
+                <li>حقل البريد الإلكتروني / Email input field</li>
+                <li>حقل كلمة المرور / Password input field</li>
+                <li>رابط نسيت كلمة المرور / Forgot password link</li>
+                <li>زر تسجيل الدخول / Login button</li>
+                <li>أزرار تسجيل الدخول الاجتماعي / Social login buttons</li>
+                <li>رابط إنشاء حساب جديد / Sign up link</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الميزات / Features</h3>
+            <ul class="features-list">
+                <li>تسجيل الدخول بالبريد الإلكتروني / Email login</li>
+                <li>تسجيل الدخول عبر Google / Google sign-in</li>
+                <li>تسجيل الدخول عبر Facebook / Facebook sign-in</li>
+                <li>إظهار/إخفاء كلمة المرور / Show/hide password toggle</li>
+                <li>التحقق من صحة البيانات / Form validation</li>
+                <li>استعادة كلمة المرور / Password recovery</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">الأمان / Security</h3>
+            <ul class="features-list">
+                <li>مصادقة آمنة مع Supabase / Secure authentication with Supabase</li>
+                <li>تشفير كلمات المرور / Password encryption</li>
+                <li>حماية من هجمات CSRF / CSRF protection</li>
+                <li>جلسات آمنة / Secure sessions</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TECHNOLOGY STACK PAGE -->
+    <div class="page page-content">
+        <div class="section-header">⚙️ المكدس التقني / Technology Stack</div>
+
+        <h2>Frontend Technologies</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>Next.js 16.0.10</strong>
+                <p>React framework with App Router, Server Components, and Turbopack</p>
+            </div>
+            <div class="tech-item">
+                <strong>React 19.2.0</strong>
+                <p>Latest React version with improved performance and new features</p>
+            </div>
+            <div class="tech-item">
+                <strong>TypeScript 5</strong>
+                <p>Type-safe development with latest TypeScript features</p>
+            </div>
+            <div class="tech-item">
+                <strong>Tailwind CSS 4.1.9</strong>
+                <p>Utility-first CSS framework for rapid UI development</p>
+            </div>
+            <div class="tech-item">
+                <strong>Shadcn/UI</strong>
+                <p>Re-usable component library built with Radix UI</p>
+            </div>
+        </div>
+
+        <h2>Backend & Database</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>Supabase</strong>
+                <p>Backend-as-a-Service with PostgreSQL database, authentication, and real-time subscriptions</p>
+            </div>
+            <div class="tech-item">
+                <strong>PostgreSQL</strong>
+                <p>Relational database for storing application data</p>
+            </div>
+        </div>
+
+        <h2>UI Components & Libraries</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>Radix UI</strong>
+                <p>Unstyled, accessible component primitives</p>
+            </div>
+            <div class="tech-item">
+                <strong>Lucide React</strong>
+                <p>Beautiful & consistent icon toolkit</p>
+            </div>
+            <div class="tech-item">
+                <strong>Embla Carousel</strong>
+                <p>Lightweight carousel library</p>
+            </div>
+            <div class="tech-item">
+                <strong>Recharts</strong>
+                <p>Composable charting library for data visualization</p>
+            </div>
+        </div>
+
+        <h2>Form Management & Validation</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>React Hook Form</strong>
+                <p>Performant, flexible form library</p>
+            </div>
+            <div class="tech-item">
+                <strong>Zod</strong>
+                <p>TypeScript-first schema validation</p>
+            </div>
+        </div>
+
+        <h2>Utilities & Tools</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>date-fns</strong>
+                <p>Modern JavaScript date utility library</p>
+            </div>
+            <div class="tech-item">
+                <strong>clsx & tailwind-merge</strong>
+                <p>Utility for constructing className strings</p>
+            </div>
+            <div class="tech-item">
+                <strong>Sonner</strong>
+                <p>Opinionated toast component for React</p>
+            </div>
+        </div>
+
+        <h2>Development Tools</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>ESLint</strong>
+                <p>Code linting and quality assurance</p>
+            </div>
+            <div class="tech-item">
+                <strong>PostCSS</strong>
+                <p>CSS transformation tool</p>
+            </div>
+            <div class="tech-item">
+                <strong>Autoprefixer</strong>
+                <p>Automatic vendor prefixing for CSS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINAL PAGE - PROJECT SUMMARY -->
+    <div class="page page-content">
+        <div class="section-header">📊 ملخص المشروع / Project Summary</div>
+
+        <h2>نظرة عامة / Overview</h2>
+        <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+            <strong>el sawah</strong> هو تطبيق توصيل طعام حديث مصمم بعناية لتوفير تجربة مستخدم سلسة وممتعة.
+            يتميز التطبيق بواجهة مستخدم عصرية وسهلة الاستخدام، مع التركيز على الأداء العالي والأمان.
+        </p>
+        <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+            <strong>el sawah</strong> is a modern food delivery application carefully designed to provide a seamless
+            and enjoyable user experience. The app features a modern and user-friendly interface, with a focus on
+            high performance and security.
+        </p>
+
+        <h2>الميزات الرئيسية / Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>🎨 تصميم متقن</strong>
+                <p>واجهة مستخدم جذابة وسهلة الاستخدام</p>
+            </div>
+            <div class="feature-item">
+                <strong>⚡ أداء عالي</strong>
+                <p>تحميل سريع وتجربة سلسة</p>
+            </div>
+            <div class="feature-item">
+                <strong>🔐 أمان محكم</strong>
+                <p>مصادقة آمنة وحماية البيانات</p>
+            </div>
+            <div class="feature-item">
+                <strong>📱 متجاوب</strong>
+                <p>يعمل بشكل مثالي على جميع الأجهزة</p>
+            </div>
+            <div class="feature-item">
+                <strong>🌐 متعدد اللغات</strong>
+                <p>دعم العربية والإنجليزية</p>
+            </div>
+            <div class="feature-item">
+                <strong>🔄 تحديثات فورية</strong>
+                <p>تتبع الطلبات في الوقت الفعلي</p>
+            </div>
+        </div>
+
+        <h2>إحصائيات التطبيق / App Statistics</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>10 صفحات رئيسية</strong>
+                <p>10 Main Pages</p>
+            </div>
+            <div class="feature-item">
+                <strong>75+ مكون</strong>
+                <p>75+ Components</p>
+            </div>
+            <div class="feature-item">
+                <strong>266 حزمة</strong>
+                <p>266 NPM Packages</p>
+            </div>
+            <div class="feature-item">
+                <strong>TypeScript</strong>
+                <p>100% Type-Safe Code</p>
+            </div>
+        </div>
+
+        <h2>معلومات الاتصال / Contact Information</h2>
+        <div class="page-info">
+            <div class="info-row">
+                <span class="info-label">اسم المشروع / Project:</span>
+                <span class="info-value">el sawah Food Delivery App</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الإصدار / Version:</span>
+                <span class="info-value">1.0.0</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">التاريخ / Date:</span>
+                <span class="info-value">January 6, 2026</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">التقنية / Technology:</span>
+                <span class="info-value">Next.js 16 + React 19 + TypeScript + Supabase</span>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 60px; padding: 30px; background: linear-gradient(135deg, #D4234E 0%, #8B1538 100%); color: white; border-radius: 15px; text-align: center;">
+            <h2 style="color: white; margin-bottom: 15px;">شكراً لاطلاعك على هذا الدليل</h2>
+            <p style="font-size: 18px;">Thank you for reviewing this documentation</p>
+            <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">
+                هذا الدليل يحتوي على معلومات شاملة عن تطبيق el sawah<br>
+                This guide contains comprehensive information about the el sawah application
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -198,7 +198,9 @@ export function subscribeToOrderUpdates(orderId: string, callback: (order: any) 
     )
     .subscribe()
 
-  return () => subscription.unsubscribe()
+  return () => {
+    subscription.unsubscribe()
+  }
 }
 
 // Favorites queries

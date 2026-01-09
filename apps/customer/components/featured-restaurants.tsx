@@ -1,131 +1,84 @@
 "use client"
 
-import { Star, Clock, DollarSign, MapPin, Heart } from "lucide-react"
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { getRestaurants, addToFavorites, removeFromFavorites, getFavorites } from "@/lib/supabase/queries"
-import { createClient } from "@/lib/supabase/client"
+import { Star, Clock, User } from "lucide-react"
+import { restaurantApi, Restaurant } from "@/lib/restaurants"
 
 export default function FeaturedRestaurants() {
-  const [restaurants, setRestaurants] = useState<any[]>([])
-  const [favorites, setFavorites] = useState<string[]>([])
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [loading, setLoading] = useState(true)
-  const [userId, setUserId] = useState<string | null>(null)
 
   useEffect(() => {
-    const loadData = async () => {
+    const fetchRestaurants = async () => {
       try {
-        const supabase = createClient()
-        const {
-          data: { user },
-        } = await supabase.auth.getUser()
-        setUserId(user?.id || null)
-
-        const data = await getRestaurants()
-        setRestaurants(data || [])
-
-        // Load user favorites if logged in
-        if (user?.id) {
-          const userFavorites = await getFavorites(user.id)
-          setFavorites(userFavorites.map((r) => r.id))
-        }
+        const data = await restaurantApi.getAll()
+        setRestaurants(data)
       } catch (error) {
-        console.error("[v0] Failed to load restaurants:", error)
+        console.error("Failed to fetch restaurants:", error)
+        // Fallback to dummy data if API fails (for demo purposes)
+        setRestaurants([
+          { id: "1", name: "Al Safadi", isActive: true, description: "Lebanese, Grill, Arabic", address: "Sheikh Zayed Road", phone: "" },
+          { id: "2", name: "Operation Falafel", isActive: true, description: "Arabic, Street Food", address: "Downtown Dubai", phone: "" },
+        ])
       } finally {
         setLoading(false)
       }
     }
 
-    loadData()
+    fetchRestaurants()
   }, [])
 
-  const toggleFavorite = async (restaurantId: string) => {
-    if (!userId) {
-      alert("Please sign in to save favorites")
-      return
-    }
-
-    try {
-      if (favorites.includes(restaurantId)) {
-        await removeFromFavorites(userId, restaurantId)
-        setFavorites(favorites.filter((id) => id !== restaurantId))
-      } else {
-        await addToFavorites(userId, restaurantId)
-        setFavorites([...favorites, restaurantId])
-      }
-    } catch (error) {
-      console.error("[v0] Failed to toggle favorite:", error)
-    }
-  }
-
   if (loading) {
-    return <div className="p-4 text-center text-muted-foreground">Loading restaurants...</div>
+    return <div className="p-4 text-center">Loading restaurants...</div>
   }
 
   return (
-    <div className="mb-4">
-      <h2 className="text-lg font-bold text-foreground mb-4">Trending Restaurants</h2>
+    <section className="mb-8">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">Featured Restaurants</h2>
+        <Link href="/restaurants" className="text-primary text-sm font-semibold">
+          See All
+        </Link>
+      </div>
+
       <div className="space-y-4">
         {restaurants.map((restaurant) => (
-          <Link key={restaurant.id} href={`/restaurant/${restaurant.id}`}>
-            <div className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition cursor-pointer group">
-              {/* Image Container */}
-              <div className="relative overflow-hidden h-40 bg-muted">
-                <img
-                  src={restaurant.image_url || "/placeholder.svg"}
+          <Link href={`/restaurant-details?id=${restaurant.id}`} key={restaurant.id} className="block">
+            <div className="bg-card rounded-xl overflow-hidden shadow-sm border border-border/50">
+              <div className="relative h-48 w-full">
+                <Image
+                  src="/placeholder.svg?height=200&width=400"
                   alt={restaurant.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  fill
+                  className="object-cover"
                 />
-                <div className="absolute top-3 left-3 flex gap-1">
-                  <span className="bg-black/60 text-white text-xs px-2 py-1 rounded font-medium">Verified</span>
-                  {restaurant.rating >= 4.7 && (
-                    <span className="bg-accent text-white text-xs px-2 py-1 rounded font-medium">Popular</span>
-                  )}
+                <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-bold shadow-sm">
+                  <Clock className="w-3 h-3 text-primary" />
+                  <span>30-45 min</span>
                 </div>
               </div>
-
-              {/* Info Container */}
               <div className="p-3">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-foreground">{restaurant.name}</h3>
-                    <p className="text-xs text-muted-foreground">{restaurant.cuisine_type}</p>
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="font-bold text-lg">{restaurant.name}</h3>
+                  <div className="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full">
+                    <Star className="w-3 h-3 fill-primary text-primary" />
+                    <span className="text-xs font-bold text-primary">4.8</span>
+                    <span className="text-[10px] text-muted-foreground">(500+)</span>
                   </div>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      toggleFavorite(restaurant.id)
-                    }}
-                    className="ml-2"
-                  >
-                    {favorites.includes(restaurant.id) ? (
-                      <Heart className="w-5 h-5 fill-destructive text-destructive" />
-                    ) : (
-                      <Heart className="w-5 h-5 text-muted-foreground" />
-                    )}
-                  </button>
                 </div>
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 mb-2">
-                  <Star className="w-4 h-4 fill-accent text-accent" />
-                  <span className="text-sm font-semibold text-foreground">{restaurant.rating}</span>
-                  <span className="text-xs text-muted-foreground">({restaurant.reviews_count})</span>
-                </div>
-
-                {/* Meta Info */}
-                <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground border-t border-border pt-2">
+                <p className="text-muted-foreground text-sm mb-3">
+                  {restaurant.description || "International, Fast Food"} • {restaurant.address || "Dubai"}
+                </p>
+                <div className="flex items-center gap-4 text-xs text-muted-foreground border-t border-border/50 pt-3">
                   <div className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-accent" />
-                    {restaurant.delivery_time} min
+                    <Image src="/delivery-bike.svg" width={14} height={14} alt="Delivery" className="opacity-70" />
+                    <span>Free delivery</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <DollarSign className="w-3.5 h-3.5 text-accent" />
-                    AED {restaurant.delivery_fee}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-accent" />
-                    {restaurant.address?.split(",")[0]}
+                    <User className="w-3 h-3" />
+                    <span>Min. order AED 30</span>
                   </div>
                 </div>
               </div>
@@ -133,6 +86,6 @@ export default function FeaturedRestaurants() {
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   )
 }

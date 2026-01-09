@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DeliveryStatus {
+  ASSIGNED
+  PICKED_UP
+  ON_WAY
+  DELIVERED
+  FAILED
+}
+
+model Driver {
+  id           String   @id @default(uuid())
+  userId       String   @unique // Link to User Service
+  name         String
+  vehicleType  String   @default("BIKE")
+  isOnline     Boolean  @default(false)
+  currentLat   Float?
+  currentLng   Float?
+  
+  deliveries   Delivery[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Delivery {
+  id           String         @id @default(uuid())
+  orderId      String         @unique // Link to Order Service
+  driverId     String?
+  driver       Driver?        @relation(fields: [driverId], references: [id])
+  status       DeliveryStatus @default(ASSIGNED)
+  
+  pickupAddress String
+  dropoffAddress String
+  
+  startedAt    DateTime?
+  completedAt  DateTime?
+  
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
