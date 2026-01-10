@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { authApi } from "@/lib/auth"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -19,20 +20,34 @@ export default function SignUpPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
 
+  const { toast } = useToast()
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
 
     try {
-      // Assuming register endpoint returns the created user or token
-      // If backend sends token on register, we can save it too.
-      // For now, mirroring existing flow (redirect to login)
       await authApi.register(email, password)
       setSuccess(true)
+
+      // Attempt to auto-login (optional enhancement for later)
+      // await authApi.login(email, password)
+
+      toast({
+        title: "Account created!",
+        description: "Redirecting to login...",
+      })
+
       setTimeout(() => router.push("/auth/login"), 2000)
     } catch (err: any) {
-      setError(err.response?.data?.message || err.message || "Failed to sign up")
+      const errorMessage = err.response?.data?.message || err.message || "Failed to sign up"
+      setError(errorMessage)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: errorMessage,
+      })
     } finally {
       setLoading(false)
     }

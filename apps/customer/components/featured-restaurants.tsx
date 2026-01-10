@@ -5,10 +5,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { Star, Clock, User } from "lucide-react"
 import { restaurantApi, Restaurant } from "@/lib/restaurants"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function FeaturedRestaurants() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -17,11 +19,7 @@ export default function FeaturedRestaurants() {
         setRestaurants(data)
       } catch (error) {
         console.error("Failed to fetch restaurants:", error)
-        // Fallback to dummy data if API fails (for demo purposes)
-        setRestaurants([
-          { id: "1", name: "Al Safadi", isActive: true, description: "Lebanese, Grill, Arabic", address: "Sheikh Zayed Road", phone: "" },
-          { id: "2", name: "Operation Falafel", isActive: true, description: "Arabic, Street Food", address: "Downtown Dubai", phone: "" },
-        ])
+        setError(true)
       } finally {
         setLoading(false)
       }
@@ -31,7 +29,40 @@ export default function FeaturedRestaurants() {
   }, [])
 
   if (loading) {
-    return <div className="p-4 text-center">Loading restaurants...</div>
+    return (
+      <section className="mb-8">
+        <h2 className="text-xl font-bold mb-4">Featured Restaurants</h2>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-card rounded-xl overflow-hidden shadow-sm border border-border/50">
+              <Skeleton className="h-48 w-full" />
+              <div className="p-3">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-center bg-destructive/5 text-destructive rounded-xl border border-destructive/20">
+        <p className="font-semibold">Unable to load restaurants</p>
+        <p className="text-sm opacity-80 mt-1">Please try again later</p>
+      </div>
+    )
+  }
+
+  if (restaurants.length === 0) {
+    return (
+      <div className="p-8 text-center bg-muted/30 rounded-xl">
+        <p className="font-semibold">No restaurants found</p>
+        <p className="text-sm text-muted-foreground mt-1">Check back soon for new additions!</p>
+      </div>
+    )
   }
 
   return (
@@ -46,10 +77,10 @@ export default function FeaturedRestaurants() {
       <div className="space-y-4">
         {restaurants.map((restaurant) => (
           <Link href={`/restaurant-details?id=${restaurant.id}`} key={restaurant.id} className="block">
-            <div className="bg-card rounded-xl overflow-hidden shadow-sm border border-border/50">
+            <div className="bg-card rounded-xl overflow-hidden shadow-sm border border-border/50 transition-all hover:shadow-md">
               <div className="relative h-48 w-full">
                 <Image
-                  src="/placeholder.svg?height=200&width=400"
+                  src={restaurant.image || "/placeholder.svg?height=200&width=400"}
                   alt={restaurant.name}
                   fill
                   className="object-cover"

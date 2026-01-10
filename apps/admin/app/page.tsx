@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Users, Store, TrendingUp, Settings } from "lucide-react"
 import Link from "next/link"
 
+import { useAdminStats } from "@/hooks/use-admin-stats"
+import { Skeleton } from "@/components/ui/skeleton"
+
 export default function AdminDashboard() {
+  const { totalUsers, activeRestaurants, totalRevenue, loading } = useAdminStats()
+
   return (
     <div className="min-h-screen bg-slate-100 p-8">
       <header className="flex justify-between items-center mb-8">
@@ -26,9 +31,9 @@ export default function AdminDashboard() {
           <div className="p-4 bg-blue-100 rounded-full text-blue-600">
             <Users className="w-8 h-8" />
           </div>
-          <div>
+          <div className="w-full">
             <p className="text-sm text-muted-foreground">Total Users</p>
-            <h3 className="text-2xl font-bold">12,345</h3>
+            {loading ? <Skeleton className="h-8 w-24" /> : <h3 className="text-2xl font-bold">{totalUsers.toLocaleString()}</h3>}
             <span className="text-xs text-green-600 flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +12% this month
             </span>
@@ -38,9 +43,9 @@ export default function AdminDashboard() {
           <div className="p-4 bg-orange-100 rounded-full text-orange-600">
             <Store className="w-8 h-8" />
           </div>
-          <div>
+          <div className="w-full">
             <p className="text-sm text-muted-foreground">Active Restaurants</p>
-            <h3 className="text-2xl font-bold">85</h3>
+            {loading ? <Skeleton className="h-8 w-24" /> : <h3 className="text-2xl font-bold">{activeRestaurants}</h3>}
             <span className="text-xs text-green-600 flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +5 new this week
             </span>
@@ -50,9 +55,9 @@ export default function AdminDashboard() {
           <div className="p-4 bg-green-100 rounded-full text-green-600">
             <TrendingUp className="w-8 h-8" />
           </div>
-          <div>
+          <div className="w-full">
             <p className="text-sm text-muted-foreground">Total Revenue</p>
-            <h3 className="text-2xl font-bold">AED 1.2M</h3>
+            {loading ? <Skeleton className="h-8 w-32" /> : <h3 className="text-2xl font-bold">AED {totalRevenue.toLocaleString()}</h3>}
             <span className="text-xs text-green-600 flex items-center">
               <TrendingUp className="w-3 h-3 mr-1" /> +8% vs last month
             </span>
